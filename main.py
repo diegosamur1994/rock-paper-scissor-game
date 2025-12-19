@@ -1,35 +1,48 @@
 # Rock paper scissors game
 import random
 
-emojis = { 'r': '🪨', 'p': '📄', 's': '✂️'}
-choices = ('r', 'p', 's')
+ROCK = 'r'
+PAPER = 'p'
+SCISSOR = 's'
+emojis = { ROCK: '🪨', PAPER: '📄', SCISSOR: '✂️'}
+choices = tuple(emojis.keys())
 
-# Asks user choice input r/p/s
-while True:
-    user_choice = input("Rock, paper, or scissors? (r/p/s): ").lower()
-    if user_choice not in choices:
-        print("Invalid Choice")
-        continue
-# Computer chooses randomly r/p/s
-    computer_chose = random.choice(choices)
-    
+def get_user_choice():
+    while True:
+        user_choice = input("Rock, paper, or scissors? (r/p/s): ").lower()
+        if user_choice in choices:
+            return user_choice
+        else:
+            print("Invalid Choice")
+
+def display_choices(user_choice, computer_choice):
     print(f"You chose {emojis[user_choice]}")
-    print(f"Computer chose {emojis[computer_chose]}")
-
-    if user_choice == computer_chose:
+    print(f"Computer chose {emojis[computer_choice]}")
+            
+def determine_winner(user_choice, computer_choice):
+    if user_choice == computer_choice:
         print("It's a tie")
-
     elif (
-        (user_choice == "r") and (computer_chose == "p") or 
-        (user_choice == "p") and (computer_chose == "s") or 
-        (user_choice == "s") and (computer_chose == "r")):
+        (user_choice == ROCK) and (computer_choice == PAPER) or 
+        (user_choice == PAPER) and (computer_choice == SCISSOR) or 
+        (user_choice == SCISSOR) and (computer_choice == ROCK)):
         print("You lose")
     else:
         print("You win!")
 
-    should_continue = input("Continue playing? (y/n): ").lower()
-    if should_continue == "n": 
-        break
+def play_game():
+    while True:
+        user_choice = get_user_choice()
 
-
+        computer_choice = random.choice(choices)
         
+        display_choices(user_choice, computer_choice)
+
+        determine_winner(user_choice, computer_choice)
+
+        should_continue = input("Continue playing? (y/n): ").lower()
+        
+        if should_continue == "n": 
+            break
+
+play_game()
